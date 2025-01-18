@@ -1,0 +1,74 @@
+--WHERE order_id IS NOT NULL
+--AND order_id <> '';
+--WHERE length(order_id) = 6
+--AND order_id <> 'Order ID'
+
+SELECT * FROM BIT_DB.JanSales;
+
+--How many orders were placed in January?
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--How many of those orders were for an iPhone?
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+AND Product = "iPhone"
+
+--Select the customer account numbers for all the orders that were placed in February.
+
+SELECT * FROM BIT_DB.customers;
+SELECT * FROM BIT_DB.FebSales;
+
+--make sure to keep the order of selects and joins in mind when doing queries
+SELECT distinct acctnum
+FROM BIT_DB.customers as cust
+JOIN BIT_DB.FebSales as feb
+ON cust.order_id = feb.orderID
+WHERE length(order_id) = 6
+AND order_id <> 'Order ID';
+
+--Which product was the cheapest one sold in January, and what was the price?
+
+SELECT * FROM BIT_DB.JanSales;
+
+SELECT distinct MIN(price), product 
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--What is the total revenue for each product sold in January?
+
+SELECT * FROM BIT_DB.JanSales;
+SELECT * FROM BIT_DB.FebSales;
+SELECT product, ROUND(SUM(quantity * price),2) as revenue
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+GROUP BY product;
+
+--Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+
+SELECT product,
+SUM(quantity),
+SUM(quantity)*price as total_revenue
+FROM BIT_DB.FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product;
+
+--How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+SELECT * FROM BIT_DB.FebSales;
+SELECT * FROM BIT_DB.customers;
+
+SELECT distinct COUNT(distinct cust.acctnum),
+AVG(quantity*price)
+FROM BIT_DB.FebSales as feb
+JOIN BIT_DB.customers as cust
+ON cust.order_id = feb.orderID
+WHERE quantity > 2
+AND length(orderID) = 6
+AND orderID <> 'Order ID';
+
