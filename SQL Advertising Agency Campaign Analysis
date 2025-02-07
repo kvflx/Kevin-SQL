@@ -1,0 +1,149 @@
+#This analysis utilized the following advertising agency data that included three tables focused on campaign info, marketing data, and website revenue:
+
+CREATE TABLE campaign_info (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(50),
+    status VARCHAR(50),
+    last_updated_date DATETIME
+);
+
+INSERT INTO campaign_info (id, name, status, last_updated_date) VALUES
+(64441550, 'Campaign1', 'paused', '2023-08-08 00:00:00'),
+(55304737, 'Campaign2', 'enabled', '2023-07-25 00:00:00'),
+(89363211, 'Campaign3', 'enabled', '2023-08-06 00:00:00'),
+(86363015, 'Campaign4', 'paused', '2023-08-14 00:00:00'),
+(99058240, 'Campaign5', 'enabled', '2023-07-28 00:00:00');
+
+create table marketing_data (
+ date datetime,
+ campaign_id varchar(50),
+ geo varchar(50),
+ cost float,
+ impressions float,
+ clicks float,
+ conversions float
+);
+
+INSERT INTO marketing_data (date, campaign_id, geo, cost, impressions, clicks, conversions) VALUES
+('2023-07-29 00:00:00', '64441550', 'United States-TX', 107.86, 2486, 1737, 294),
+('2023-08-14 00:00:00', '64441550', 'United States-OH', 230.99, 2465, 1747, 275),
+('2023-08-12 00:00:00', '64441550', 'United States-GA', 214.94, 2461, 1306, 352),
+('2023-08-04 00:00:00', '55304737', 'United States-NY', 123.74, 1069, 1356, 317),
+('2023-08-19 00:00:00', '86363015', 'United States-GA', 122.74, 1248, 1290, 388),
+('2023-07-29 00:00:00', '99058240', 'United States-GA', 162.58, 1025, 1724, 346),
+('2023-08-03 00:00:00', '89363211', 'United States-GA', 223.92, 1676, 1714, 480),
+('2023-07-28 00:00:00', '89363211', 'United States-OH', 157.63, 1166, 1301, 473),
+('2023-08-02 00:00:00', '64441550', 'United States-TX', 102.97, 1532, 1806, 470),
+('2023-08-17 00:00:00', '99058240', 'United States-OH', 227.24, 1550, 1236, 442),
+('2023-08-13 00:00:00', '55304737', 'United States-TX', 215.55, 2170, 1430, 268),
+('2023-07-27 00:00:00', '89363211', 'United States-TX', 106.19, 2295, 1139, 287),
+('2023-08-14 00:00:00', '89363211', 'United States-TX', 168.6, 1940, 1587, 411),
+('2023-08-10 00:00:00', '89363211', 'United States-TX', 193.18, 2128, 1030, 481),
+('2023-07-30 00:00:00', '86363015', 'United States-CA', 198.19, 1873, 1479, 287),
+('2023-08-11 00:00:00', '89363211', 'United States-OH', 176.48, 1050, 1418, 449),
+('2023-08-17 00:00:00', '89363211', 'United States-GA', 219.56, 1742, 1113, 465),
+('2023-07-28 00:00:00', '55304737', 'United States-CA', 141.84, 2216, 1030, 456),
+('2023-07-28 00:00:00', '86363015', 'United States-TX', 117.77, 2469, 1617, 499),
+('2023-08-03 00:00:00', '89363211', 'United States-GA', 171.03, 1513, 1591, 267),
+('2023-08-12 00:00:00', '89363211', 'United States-CA', 211.66, 1799, 1288, 354),
+('2023-08-11 00:00:00', '64441550', 'United States-GA', 179.42, 1228, 1283, 479),
+('2023-07-26 00:00:00', '64441550', 'United States-GA', 208.19, 1547, 1576, 410),
+('2023-07-24 00:00:00', '64441550', 'United States-GA', 176.21, 1423, 1709, 327),
+('2023-07-28 00:00:00', '89363211', 'United States-OH', 238.95, 2291, 1059, 305),
+('2023-08-04 00:00:00', '89363211', 'United States-NY', 108.93, 2185, 1266, 479),
+('2023-07-30 00:00:00', '64441550', 'United States-NY', 169.59, 1128, 1744, 411),
+('2023-08-05 00:00:00', '99058240', 'United States-GA', 192.63, 1088, 1849, 326),
+('2023-08-14 00:00:00', '55304737', 'United States-GA', 198.12, 1368, 1126, 475),
+('2023-08-12 00:00:00', '86363015', 'United States-NY', 222.99, 2328, 1167, 377);
+
+create table website_revenue (
+ date datetime,
+ campaign_id varchar(50),
+ state varchar(2),
+ revenue float
+);
+
+INSERT INTO website_revenue (date, campaign_id, state, revenue) VALUES
+('2023-07-24 00:00:00', '64441550', 'GA', 6370),
+('2023-08-02 00:00:00', '89363211', 'CA', 6676),
+('2023-08-03 00:00:00', '86363015', 'CA', 6239),
+('2023-07-24 00:00:00', '55304737', 'TX', 6607),
+('2023-08-17 00:00:00', '86363015', 'NY', 7014),
+('2023-08-13 00:00:00', '99058240', 'GA', 6765),
+('2023-07-30 00:00:00', '55304737', 'TX', 6803),
+('2023-08-07 00:00:00', '89363211', 'NY', 5600),
+('2023-07-27 00:00:00', '86363015', 'CA', 6920),
+('2023-08-09 00:00:00', '55304737', 'NY', 6406),
+('2023-08-15 00:00:00', '86363015', 'TX', 6556),
+('2023-08-07 00:00:00', '99058240', 'GA', 6371),
+('2023-07-26 00:00:00', '64441550', 'TX', 7033),
+('2023-07-29 00:00:00', '99058240', 'NY', 7147),
+('2023-08-21 00:00:00', '89363211', 'CA', 5249),
+('2023-08-09 00:00:00', '99058240', 'OH', 5989),
+('2023-08-05 00:00:00', '64441550', 'OH', 5571),
+('2023-07-28 00:00:00', '55304737', 'GA', 6964),
+('2023-07-31 00:00:00', '99058240', 'GA', 6973),
+('2023-08-15 00:00:00', '86363015', 'NY', 6673),
+('2023-07-31 00:00:00', '89363211', 'OH', 6743),
+('2023-07-26 00:00:00', '55304737', 'GA', 6223),
+('2023-08-05 00:00:00', '89363211', 'OH', 6003),
+('2023-08-11 00:00:00', '55304737', 'OH', 5824),
+('2023-08-19 00:00:00', '89363211', 'TX', 7081),
+('2023-08-02 00:00:00', '99058240', 'NY', 7093),
+('2023-08-10 00:00:00', '89363211', 'CA', 6335),
+('2023-08-09 00:00:00', '86363015', 'OH', 7447),
+('2023-07-24 00:00:00', '99058240', 'CA', 5130),
+('2023-08-03 00:00:00', '89363211', 'NY', 6465);
+
+#Analysis
+
+#Question 1. Write a query to get the sum of impressions by day.
+SELECT date as Day, SUM(impressions) as 'Total Impressions' FROM pmg.marketing_data
+GROUP BY date
+ORDER BY sum(impressions);
+
+
+#Question 2. Write a query to get the top three revenue-generating states in order of best to worst. How much revenue did the third best state generate?
+WITH revenue_by_state as (
+SELECT state as 'State', SUM(revenue) as 'Total Revenue' FROM website_revenue
+GROUP BY state)
+
+SELECT * FROM revenue_by_state
+ORDER BY state LIMIT 3;
+
+-- The third best state generated 36549 in revenue.
+
+#Question 3. Write a query that shows total cost, impressions, clicks, and revenue of each campaign. Make sure to include the campaign name in the output.
+
+SELECT camp.name, ROUND(sum(market.cost),2) as 'total cost', market.impressions, market.clicks, web.revenue
+FROM pmg.marketing_data as market
+JOIN pmg.website_revenue as web
+ON market.campaign_id = web.campaign_id
+JOIN pmg.campaign_info as camp
+ON camp.id = web.campaign_id
+GROUP BY camp.name;
+
+#Question 4. Write a query to get the number of conversions of Campaign5 by state. Which state generated the most conversions for this campaign?
+SELECT camp.name as 'Name' , web.state as 'State', SUM(market.conversions) as 'Total Conversions'
+FROM pmg.marketing_data as market
+JOIN pmg.website_revenue as web
+ON market.campaign_id = web.campaign_id
+JOIN pmg.campaign_info as camp
+ON camp.id = web.campaign_id
+WHERE camp.name = "Campaign5"
+GROUP BY web.state;
+
+--The state of Georgia generated the most conversions.
+
+#Question 5. In your opinion, which campaign was the most efficient, and why?
+SELECT camp.name as 'Name' , web.state as 'State', ROUND(SUM(market.conversions)/market.cost, 2) as 'Cost Per Conversion', 
+ROUND(SUM(market.cost)/market.clicks, 2) as 'Cost Per Click', market.impressions as 'Impressions'
+FROM pmg.marketing_data as market
+JOIN pmg.website_revenue as web
+ON market.campaign_id = web.campaign_id
+JOIN pmg.campaign_info as camp
+ON camp.id = web.campaign_id
+GROUP BY web.state;
+
+--In my opinion, Campaign1 was the most efficient, maintaining the lowest cost per conversion and cost per click, while being the median for impressions.
+--ultimately, though, it could be argued that 'most efficient' can mean different things depending on what the KPIs are for each campaign
