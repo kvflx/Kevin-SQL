@@ -1,5 +1,7 @@
---I conducted an analysis using a Pitchfork reviews dataset that includes reviews from Jan 5, 1999 to Jan 8, 2017. 
-Credit: https://github.com/nolanbconaway/pitchfork-data/tree/master/scrape
+--I conducted an analysis using a Pitchfork reviews dataset that includes reviews from Jan 5, 1999 to Jan 8, 2017. I used the data to find information and correlations between
+review scores, genres, record labels, and other performance metrics.
+
+Dataset Credit: https://github.com/nolanbconaway/pitchfork-data/tree/master/scrape
 
 --Section 1: Scores and Trends
 
