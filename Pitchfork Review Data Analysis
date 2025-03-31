@@ -1,0 +1,94 @@
+--I conducted an analysis using a Pitchfork reviews dataset that includes reviews from Jan 5, 1999 to Jan 8, 2017. 
+Credit: https://github.com/nolanbconaway/pitchfork-data/tree/master/scrape
+
+--Section 1: Scores and Trends
+
+--#1 What are the score gaps for each artist between their highest and lowest scores?
+
+SELECT DISTINCT artist,
+MAX(score) OVER (PARTITION BY artist) as "Highest Score",
+MIN(score) OVER (PARTITION BY artist) as "Lowest Score",
+MAX(score) OVER (PARTITION BY artist) - MIN(score) OVER (PARTITION BY artist) as "Score Gap"
+FROM reviews
+ORDER BY artist;
+
+--#2 Do albums released in certain years tend to receive higher scores than others?
+--Yes, after conducting a query it appears that albums published in 2017 tend to have higher scores than others.
+
+SELECT COUNT(pub_year), pub_year, ROUND(AVG(score), 1) as "Average Score"
+FROM reviews
+GROUP BY pub_year
+ORDER BY pub_year, "Average Score";
+
+--Section 2: Genre and Label Analysis
+
+--#1 Which record labels are associated with the highest average scores?
+--The top 5 record labels with the highest average score are volt, rolling stones, geffen/get on down, enigma, and ace of hearts.
+
+SELECT labels.label, ROUND(AVG(score), 1) as "Average Score"
+FROM reviews
+JOIN labels
+ON labels.reviewid = reviews.reviewid
+WHERE labels.label IS NOT NULL
+GROUP BY labels.label
+ORDER BY "Average Score" desc
+LIMIT 5;
+
+--#2 How has Pitchfork's genre coverage changed over time?
+--Over the years, it looks like reviews of music in the Rock genre have increased substantially throughout the 21st century.
+SELECT genre, COUNT(genre) as "count", year
+FROM genres
+JOIN years
+ON genres.reviewid = years.reviewid
+WHERE genres.genre IS NOT NULL
+AND years.year IS NOT NULL
+GROUP BY genre, year
+ORDER BY count desc;
+
+SELECT genre, COUNT(genre) as "count", year
+FROM genres
+JOIN years
+ON genres.reviewid = years.reviewid
+WHERE year = 2015
+AND year =
+GROUP BY genre;
+
+--Section 3: Artist-Specific Insights
+--#1 Who are the most and least highly rated artists?
+--The highest rated artist is dangelo, with highest average score of 10. The artist rated with the lowest average score is travis morrisson with 0.
+
+SELECT artist, MAX(avg_score) as max_score 
+FROM (SELECT artist, AVG(score) as avg_score
+FROM reviews
+GROUP by artist);
+
+SELECT artist, MIN(avg_score) as min_score 
+FROM (SELECT artist, AVG(score) as avg_score
+FROM reviews
+GROUP by artist);
+
+--#2 Which artists have received the most reviews?
+--When looking at standalone artists, the rock band guided by voices has received the most reviews with 23. 
+SELECT * FROM content;
+
+SELECT reviews.artist, COUNT(content.content) as "review count"
+FROM reviews
+JOIN content
+ON reviews.reviewid = content.reviewid
+WHERE artist <> 'various artists'
+GROUP BY reviews.artist
+ORDER BY COUNT(content) desc;
+
+--Section 4: Reviewer and Content Patterns
+--#1 Which reviewers have contributed the most reviews?
+--Joe Tangari has contirbuted the most reviews.
+SELECT reviews.author, COUNT(content.content) as "review count"
+FROM reviews
+JOIN content
+ON reviews.reviewid = content.reviewid
+GROUP by reviews.author
+ORDER by "review count" desc;
+
+
+
+
